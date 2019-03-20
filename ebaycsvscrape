@@ -1,0 +1,61 @@
+# This code actually takes the item and scrapes the price and prints the prices I believe
+# based on youtube video:
+import requests
+import csv
+import urllib.request
+from urllib.request import urlopen
+from bs4 import BeautifulSoup as b
+
+reader_links = [] 
+
+with open('name ofcsvfilea.csv', 'r') as costco_reader: 
+	csv_reader = csv.reader(costco_reader) 
+	for row in csv_reader: 
+		"""print(row[1])"""
+	
+	reader_links.append(1) # or you can run through the list of links here
+
+
+base_url = "https://www.ebay.co.uk/sch/i.html?_from=R40&_nkw="
+request = "xbox"
+url_seperator = "&_sacat=0&_pgn="
+page_num = "1"
+
+url = base_url + request + url_seperator + page_num
+
+html = urllib.request.urlopen(url).read()
+soup = b(html, "html.parser")
+
+
+for post in soup.findAll("li", {"class": "lvprice prc"}):
+	h=link = post.findAll("span", {"class": "bold"})[0].text
+	"""link = post.findAll("span", {"class": "bold"})[0].text"""
+	print (link)
+
+
+	
+	
+	
+	
+	
+"""#This link literally grabs all the prices from ebay
+for post in soup.findAll("ul", {"class": "lvprices left space-zero"}):
+	link = post.findAll("span", {"class": "bold"})[0].text
+	print (link)
+	
+	h = post.findAll("a", {"class" : "s-item__link"})[0]
+	price = post.findAll("span", {"class": "s-item__price"}
+	title = h.tet
+	link = h['href']
+	print(title)
+	print(price)
+	print(link + "\n")
+	
+	#This script literally grabs all the prices from ebay
+for post in soup.findAll("ul", {"class": "lvprices left space-zero"}):
+	link = post.findAll("span", {"class": "bold"})[0].text
+	print (link)
+	
+	"""
+
+	

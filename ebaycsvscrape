@@ -10,24 +10,34 @@ reader_links = []
 
 with open('name ofcsvfilea.csv', 'r') as costco_reader: 
 	csv_reader = csv.reader(costco_reader) 
-	for row in csv_reader: 
-		"""print(row[1])"""
-	
-	reader_links.append(1) # or you can run through the list of links here
+	for row in csv_reader:
+	    if row:
+	    	#I assume that the data that you want is in the second column :)
+	        print(row[1])
+		reader_links.append(row[1])
+	#What is this code below? It's not doing anything. It should be the code I have above.
+	#reader_links.append(1) # or you can run through the list of links here
 
 
 base_url = "https://www.ebay.co.uk/sch/i.html?_from=R40&_nkw="
+#Do you change this variable below?
 request = "xbox"
 url_seperator = "&_sacat=0&_pgn="
-page_num = "1"
+#You're using page_num as a string and not interger, hence you cannot change it by counting. Use what I have instead if you want to make it change pages by counting.
+#page_num = "1"
+page_num = 1
 
-url = base_url + request + url_seperator + page_num
+#By using the string of the int in page_num you can apply counting to change it through each pass by using page_num += 1 this will make the next pass 2, ...
+url = base_url + request + url_seperator + str(page_num)
 
 html = urllib.request.urlopen(url).read()
 soup = b(html, "html.parser")
 
 
 for post in soup.findAll("li", {"class": "lvprice prc"}):
+	#By using findAll in BeautifulSoup, you will find ALL of the tags that match.
+	#Can this tag be more specific and instead of using findAll, can you use find for the link variable?
+	#What is h=link? Should it just be link?
 	h=link = post.findAll("span", {"class": "bold"})[0].text
 	"""link = post.findAll("span", {"class": "bold"})[0].text"""
 	print (link)
